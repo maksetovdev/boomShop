@@ -1,6 +1,7 @@
 import express from "express";
 import { engine, create } from "express-handlebars"
-
+import authRoutes from './routes/auth.js'
+import productsRoutes from './routes/products.js'
 const app = express()
 const hbs = create({defaultLayout: "main", extname: "hbs",})
 
@@ -8,14 +9,9 @@ app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', './views')
 
-app.get('/', (req, res) => {
-  res.render('index')
-})
-
-app.get('/about', (req, res) => {
-  res.render('about')
-})
-
+//Routes
+app.use(authRoutes)
+app.use(productsRoutes)
 
 const PORT = process.env.PORT || 4100
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
